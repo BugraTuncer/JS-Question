@@ -16,10 +16,10 @@ export default function move(list: List, source: string, destination: string): L
   // we need to delete the file
   list.forEach((listElement) => {
     if (listElement.files) {
-      let deletedFile = listElement.files;
-      deletedFile = listElement.files.filter((file) => file.id !== source);
+      let newFiles = listElement.files;
+      newFiles = listElement.files.filter((file) => file.id !== source);
       // eslint-disable-next-line no-param-reassign
-      listElement.files = deletedFile;
+      listElement.files = newFiles;
     }
   });
 
