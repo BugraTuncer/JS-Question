@@ -5,6 +5,7 @@ type File = { id: string; name: string };
 
 export default function move(list: List, source: string, destination: string): List {
   const foundSourceListArray = list.map((listElement) => {
+    // First of all, we find the file that we will move to the other folder
     if (listElement.id === source) throw new Error('You cannot move a folder');
     if (listElement.files) {
       return listElement.files.find((file: File) => file.id === source);
@@ -12,6 +13,7 @@ export default function move(list: List, source: string, destination: string): L
     return listElement.files;
   });
 
+  // we need to delete the file
   list.forEach((listElement) => {
     if (listElement.files) {
       let newListFiles = listElement.files;
@@ -20,8 +22,11 @@ export default function move(list: List, source: string, destination: string): L
       listElement.files = newListFiles;
     }
   });
+
   const destinationIndex = list.findIndex((item) => item.id === destination);
   if (destinationIndex < 0) throw new Error('You cannot specify a file as the destination');
+
+  // we add the file
   list.forEach((listElement) => {
     if (listElement.id === destination) {
       const newFiles = listElement.files;
